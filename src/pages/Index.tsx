@@ -1,12 +1,32 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+import { useState } from 'react';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { DesktopCoachView } from '@/components/development/DesktopCoachView';
+import { MobilePlayerView } from '@/components/development/MobilePlayerView';
+import { Monitor, Smartphone } from 'lucide-react';
 
 const Index = () => {
+  const [activeView, setActiveView] = useState<'coach' | 'player'>('coach');
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background">
-      <div className="text-center">
-        <h1 className="mb-4 text-4xl font-bold">Welcome to Your Blank App</h1>
-        <p className="text-xl text-muted-foreground">Start building your amazing project here!</p>
+    <div className="min-h-screen bg-background">
+      {/* View Switcher - Demo Only */}
+      <div className="fixed bottom-4 left-1/2 -translate-x-1/2 z-50">
+        <Tabs value={activeView} onValueChange={(v) => setActiveView(v as 'coach' | 'player')}>
+          <TabsList className="shadow-lg">
+            <TabsTrigger value="coach" className="gap-2">
+              <Monitor className="h-4 w-4" />
+              Coach View
+            </TabsTrigger>
+            <TabsTrigger value="player" className="gap-2">
+              <Smartphone className="h-4 w-4" />
+              Player View
+            </TabsTrigger>
+          </TabsList>
+        </Tabs>
       </div>
+
+      {/* Views */}
+      {activeView === 'coach' ? <DesktopCoachView /> : <MobilePlayerView />}
     </div>
   );
 };
